@@ -21,8 +21,9 @@ package org.apache.zookeeper;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.zookeeper.server.ExitCode;
 import org.apache.zookeeper.util.ServiceUtils;
+import org.apache.zookeeper.version.Info;
 
-public class Version implements org.apache.zookeeper.version.Info {
+public class Version {
 
     /*
      * Since the SVN to Git port this field doesn't return the revision anymore
@@ -33,20 +34,20 @@ public class Version implements org.apache.zookeeper.version.Info {
      */
     @Deprecated
     public static int getRevision() {
-        return REVISION;
+        return Info.REVISION;
     }
 
     public static String getRevisionHash() {
-        return REVISION_HASH;
+        return Info.REVISION_HASH;
     }
 
     public static String getBuildDate() {
-        return BUILD_DATE;
+        return Info.BUILD_DATE;
     }
 
     @SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_OF_NULL_VALUE", justification = "Missing QUALIFIER causes redundant null-check")
     public static String getVersion() {
-        return MAJOR + "." + MINOR + "." + MICRO + (QUALIFIER == null ? "" : "-" + QUALIFIER);
+        return Info.MAJOR + "." + Info.MINOR + "." + Info.MICRO + (Info.QUALIFIER == null ? "" : "-" + Info.QUALIFIER);
     }
 
     public static String getVersionRevision() {
