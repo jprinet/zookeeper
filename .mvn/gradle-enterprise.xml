@@ -1,0 +1,21 @@
+<gradleEnterprise>
+    <server>
+        <url>https://ec2-35-173-42-35.compute-1.amazonaws.com/</url>
+        <allowUntrusted>true</allowUntrusted>
+    </server>
+    <buildScan>
+        <publish>ALWAYS</publish>
+        <capture>
+            <goalInputFiles>true</goalInputFiles>
+        </capture>
+        <backgroundBuildScanUpload>#{env['CI'] == null}</backgroundBuildScanUpload>
+    </buildScan>
+    <buildCache>
+        <local>
+            <enabled>true</enabled>
+        </local>
+        <remote>
+            <enabled>false</enabled>
+        </remote>
+    </buildCache>
+</gradleEnterprise>
