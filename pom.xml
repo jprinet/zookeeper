@@ -831,6 +831,113 @@
           <artifactId>maven-bundle-plugin</artifactId>
           <version>5.1.1</version>
         </plugin>
+
+        <plugin>
+            <groupId>com.gradle</groupId>
+            <artifactId>gradle-enterprise-maven-extension</artifactId>
+            <configuration>
+                <gradleEnterprise>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.github.spotbugs</groupId>
+                            <artifactId>spotbugs-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>spotbugs</id>
+                                    <inputs>
+                                        <fileSets>
+                                            <fileSet>
+                                                <name>classFilesDirectory</name>
+                                                <excludes>
+                                                    <exclude>META-INF/MANIFEST.MF</exclude>
+                                                </excludes>
+                                            </fileSet>
+                                            <fileSet>
+                                                <name>testClassFilesDirectory</name>
+                                            </fileSet>
+                                        </fileSets>
+                                        <properties>
+                                            <property><name>skip</name></property>
+
+                                            <property><name>xmlOutput</name></property>
+
+                                            <property><name>includeTests</name></property>
+                                            <property><name>addSourceDirs</name></property>
+                                            <property><name>xmlEncoding</name></property>
+                                            <property><name>sourceEncoding</name></property>
+                                            <property><name>threshold</name></property>
+                                            <property><name>effort</name></property>
+                                            <property><name>relaxed</name></property>
+                                            <property><name>visitors</name></property>
+                                            <property><name>omitVisitors</name></property>
+                                            <property><name>pluginList</name></property>
+                                            <property><name>onlyAnalyze</name></property>
+                                            <property><name>nested</name></property>
+                                            <property><name>maxRank</name></property>
+                                            <property><name>failOnError</name></property>
+                                            <property><name>skipEmptyReport</name></property>
+                                            <property><name>userPrefs</name></property>
+
+                                            <!-- Not quite right: These should be input files so we track the content in the cache key. -->
+                                            <!-- Since filter files are loaded from the classpath they cannot be easily added as inputs. -->
+                                            <property><name>includeFilterFile</name></property>
+                                            <property><name>excludeFilterFile</name></property>
+                                            <property><name>excludeBugsFile</name></property>
+                                        </properties>
+                                        <ignoredProperties>
+                                            <!-- Ignore properties that control Mojo execution but do not influence outputs -->
+                                            <ignore>debug</ignore>
+                                            <ignore>trace</ignore>
+                                            <ignore>fork</ignore>
+                                            <ignore>maxHeap</ignore>
+                                            <ignore>timeout</ignore>
+                                            <ignore>jvmArgs</ignore>
+                                            <ignore>spotbugsXmlOutput</ignore><!-- Deprecated, always true -->
+                                            <ignore>compileSourceRoots</ignore> <!-- Read-only -->
+                                            <ignore>testSourceRoots</ignore> <!-- Read-only -->
+                                            <ignore>remoteRepositories</ignore>
+                                            <ignore>localRepository</ignore>
+                                            <ignore>remoteArtifactRepositories</ignore>
+
+                                            <!-- Ignore Maven state, as it cannot be part of cache key -->
+                                            <ignore>pluginArtifacts</ignore>
+                                            <ignore>session</ignore>
+                                            <ignore>plugins</ignore>
+
+                                            <!-- NOTE: Ignored because we hard-code the output files : there is no single property representing the location of each input file -->
+                                            <!-- If these values are changed, the <outputs> below should be modified accordingly -->
+                                            <ignore>xmlOutputDirectory</ignore>
+                                            <ignore>spotbugsXmlOutputDirectory</ignore>
+                                            <ignore>spotbugsXmlOutputFilename</ignore>
+
+                                            <!-- NOTE: It's not quite correct to ignore these values. This means that if _only_ these values are changed,
+                                                       an invalid cache hit would result, producing the old report without the correct xref. -->
+                                            <ignore>xrefLocation</ignore>
+                                            <ignore>xrefTestLocation</ignore>
+
+
+                                        </ignoredProperties>
+                                    </inputs>
+                                    <outputs>
+                                        <files>
+                                            <file>
+                                                <name>xmlOutputFile</name>
+                                                <path>${project.build.directory}/spotbugs.xml</path>
+                                            </file>
+                                            <file>
+                                                <name>spotbugsXmlOutputFile</name>
+                                                <path>${project.build.directory}/spotbugsXml.xml</path>
+                                            </file>
+                                        </files>
+                                        <cacheableBecause>check should only run when inputs change</cacheableBecause>
+                                    </outputs>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </gradleEnterprise>
+            </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
 
