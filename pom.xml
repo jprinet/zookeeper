@@ -837,6 +837,13 @@
             <artifactId>gradle-enterprise-maven-extension</artifactId>
             <configuration>
                 <gradleEnterprise>
+                    <normalization>
+                        <runtimeClassPath>
+                            <ignoredFiles>
+                                <ignoredFile>**/version.properties</ignoredFile>
+                            </ignoredFiles>
+                        </runtimeClassPath>
+                    </normalization>
                     <plugins>
                         <plugin>
                             <groupId>com.github.spotbugs</groupId>
