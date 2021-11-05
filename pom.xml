@@ -293,6 +293,7 @@
         <!-- zookeeper-it needed by fatjar contrib -->
         <module>zookeeper-it</module>
       </modules>
+
     </profile>
     <profile>
       <!-- fatjar only profile; zookeeper-contrib will activate the fatjar in its pom -->
@@ -941,6 +942,57 @@
                                 </execution>
                             </executions>
                         </plugin>
+
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-antrun-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>build-c-client</id>
+                                    <inputs>
+                                        <fileSets>
+                                            <fileSet>
+                                                <name>include</name>
+                                                <paths>
+                                                    <path>include</path>
+                                                    <path>src</path>
+                                                    <path>ssh</path>
+                                                    <path>tests</path>
+                                                </paths>
+                                            </fileSet>
+                                        </fileSets>
+                                        <properties>
+                                            <property><name>ANTLIB</name></property>
+                                        </properties>
+                                        <ignoredProperties>
+                                            <ignore>customTaskPrefix</ignore>
+                                            <ignore>exportAntProperties</ignore>
+                                            <ignore>failOnError</ignore>
+                                            <ignore>localRepository</ignore>
+                                            <ignore>pluginArtifacts</ignore>
+                                            <ignore>project</ignore>
+                                            <ignore>propertyPrefix</ignore>
+                                            <ignore>skip</ignore>
+                                            <ignore>sourceRoot</ignore>
+                                            <ignore>tasks</ignore>
+                                            <ignore>testSourceRoot</ignore>
+                                            <ignore>versionsPropertyName</ignore>
+                                            <ignore>target</ignore>
+                                        </ignoredProperties>
+                                    </inputs>
+                                    <outputs>
+                                        <directories>
+                                            <directory>
+                                                <name>generated</name>
+                                                <path>generated</path>
+                                            </directory>
+                                        </directories>
+                                        <cacheableBecause>this plugin has CPU-bound goals with well-defined inputs and outputs</cacheableBecause>
+                                    </outputs>
+                                </execution>
+                            </executions>
+                        </plugin>
+
                     </plugins>
                 </gradleEnterprise>
             </configuration>
