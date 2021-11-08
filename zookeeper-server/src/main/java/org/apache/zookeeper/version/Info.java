@@ -35,9 +35,7 @@ public class Info {
     static {
         final Properties properties = new Properties();
         try (final InputStream stream = Info.class.getClassLoader().getResourceAsStream("version.properties")) {
-            if (null != stream) {
-                properties.load(stream);
-            }
+            properties.load(stream);
         } catch (IOException e) {
             System.err.printf("Unable to load project properties, using default values: %s%n", e.getMessage());
         }
