@@ -101,3 +101,6 @@ zookeeper-client/zookeeper-client-c/generated/
 
 # Python
 *.py[cod]
+
+# Develocity
+.mvn/.develocity/
